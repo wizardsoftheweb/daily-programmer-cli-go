@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 // The is the git-wiz version only. Other components may have
@@ -52,7 +53,7 @@ func Execute() error {
 var DailyProgCmd = &cobra.Command{
 	Use:   "daily-prog",
 	Short: "i have no idea what im doing",
-	Long: "opinionated r/DailyProgrammer tooling",
+	Long:  "opinionated r/DailyProgrammer tooling",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		if ShowVersion {
 			cmd.Printf("%s version %s\n", cmd.Use, PackageVersion)

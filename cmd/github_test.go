@@ -1,9 +1,11 @@
 package cmd
 
 import (
-	"github.com/google/go-github/github"
+	"context"
 	"net/http"
 	"testing"
+
+	"github.com/google/go-github/github"
 
 	. "gopkg.in/check.v1"
 )
@@ -11,6 +13,7 @@ import (
 func TestGithub(t *testing.T) { TestingT(t) }
 
 const sharedPat = "qqq123"
+
 var oldNewClient func(httpClient *http.Client) *github.Client
 var RepositoriesServiceType RepositoriesService
 
@@ -20,6 +23,12 @@ type GithubSuite struct {
 
 func mockNewClient(httpClient *http.Client) *github.Client {
 	return &github.Client{}
+}
+
+type GetRepoSvcMock struct{}
+
+func (rs *GetRepoSvcMock) Get(ctx context.Context, owner, repo string) (*github.Repository, *github.Response, error) {
+	return nil, nil, nil
 }
 
 var _ = Suite(&GithubSuite{})
