@@ -17,8 +17,14 @@ None; see [Roadmap](#Roadmap) for future features and [Ideas](#Ideas) for things
 ## Roadmap
 
 1. Document necessary tokens and setup steps for usage
+    1. Using opinionated structure
+    2. Using config structure
 2. Create a new repo
+    1. Using opinionated structure
+    2. Using config structure
 3. Set up and document file structure for the repo
+    1. Using opinionated structure
+    2. Using format string for structure
 4. Set up and document how to connect to Reddit API
 5. Search r/DailyProgrammer prompts
     1. Search by date
