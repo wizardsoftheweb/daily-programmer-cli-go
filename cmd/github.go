@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"strings"
 
 	"github.com/google/go-github/github"
@@ -55,6 +54,5 @@ func ensureRepoExists(repoSvc RepositoriesService, repoName string) {
 			},
 		)
 		whereErrorsGoToDie(err)
-		fmt.Print(err)
 	}
 }
