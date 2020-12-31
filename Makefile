@@ -13,3 +13,9 @@ build: clean build-version
 
 init:
 	go mod init github.com/wizardsoftheweb/daily-programmer-cli
+
+test:
+	go test -v ./... -cover -race -coverprofile=.coverage.out
+
+coverage: test
+	go tool cover -func=.coverage.out
