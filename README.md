@@ -10,7 +10,7 @@
 
 This project aims to set up some organization and flow around using [r/DailyProgrammer](https://old.reddit.com/r/dailyprogrammer).
 
-The problems from r/DailyProgrammer are useful demonstrations of coding skills and, over time, lend themselves to (semi?) useful code samples. Socializing solutions and tracking progress is annoying through reddit but much easier through `git` and, by extension, GitHub.
+The problems from r/DailyProgrammer are useful demonstrations of coding skills and, over time, lend themselves to (semi?) useful code samples. Socializing solutions and tracking progress is annoying through reddit but much easier through VCS. For now, the project only supports GitHub.
 
 This repo (at V1 or later) provides a tool that does the following things:
 
