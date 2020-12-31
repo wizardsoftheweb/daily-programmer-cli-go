@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 )
 
@@ -14,6 +16,10 @@ var ShowVersion bool
 // The verbosity flag is a count flag, ie the more there are the more verbose
 // it gets.
 var VerbosityFlagValue int
+
+// This flag is populated with a GitHub personal access token with at least the
+// public_repo scope
+var GithubPersonalAccessToken string
 
 func init() {
 	DailyProgCmd.PersistentFlags().BoolVarP(
@@ -29,6 +35,13 @@ func init() {
 		"v",
 		"Increases application verbosity",
 	)
+	DailyProgCmd.PersistentFlags().StringVar(
+		&GithubPersonalAccessToken,
+		"githubpat",
+		os.Getenv("WOTW_DAILY_PROG_GITHUB_TOKEN"),
+		"GH PAT with at least public_repo scope",
+	)
+	_ = DailyProgCmd.PersistentFlags().MarkHidden("githubpat")
 }
 
 // This is the primary cmd runner and exposes git-wiz
@@ -36,11 +49,11 @@ func Execute() error {
 	return DailyProgCmd.Execute()
 }
 
-// git-wiz has no base functionality. It must be used with subcommands.
+// daily-prog has no base functionality. It must be used with subcommands.
 var DailyProgCmd = &cobra.Command{
 	Use:   "daily-prog",
 	Short: "i have no idea what im doing",
-	Long: "opinionated r/DailyProgrammer tooling",
+	Long:  "opinionated r/DailyProgrammer tooling",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		if ShowVersion {
 			cmd.Printf("%s version %s\n", cmd.Use, PackageVersion)
