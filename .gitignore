@@ -1,4 +1,5 @@
 build
+.agentfile
 
 # Binaries for programs and plugins
 *.exe

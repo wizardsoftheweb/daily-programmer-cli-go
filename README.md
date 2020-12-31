@@ -34,6 +34,10 @@ See [Roadmap](#Roadmap) for future features and [Ideas](#Ideas) for things that 
 2. Create a new repo
     1. Using opinionated structure
     2. Using config structure
+    3. With...
+        * `.gitignore`
+        * skeleton directories?
+        * `README` boilerplates
 3. Set up and document file structure for the repo
     1. Using opinionated structure
     2. Using format string for structure
