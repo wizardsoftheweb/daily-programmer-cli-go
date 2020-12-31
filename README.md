@@ -10,9 +10,21 @@
 
 This project aims to set up some organization and flow around using [r/DailyProgrammer](https://old.reddit.com/r/dailyprogrammer).
 
+The problems from r/DailyProgrammer are useful demonstrations of coding skills and, over time, lend themselves to (semi?) useful code samples. Socializing solutions and tracking progress is annoying through reddit but much easier through `git` and, by extension, GitHub.
+
+This repo (at V1 or later) provides a tool that does the following things:
+
+1. Creates a local directory structure for solution output
+2. Links the local structure to GitHub
+3. Seeds each directory with a `README.md` that
+    * links to the given challenge
+    * pulls in the challenge
+
+See [the examples](./docs/examples.md) for more info.
+
 ## Features
 
-None; see [Roadmap](#Roadmap) for future features and [Ideas](#Ideas) for things that might be features eventually
+See [Roadmap](#Roadmap) for future features and [Ideas](#Ideas) for things that might be features eventually
 
 ## Roadmap
 
@@ -46,3 +58,8 @@ None; see [Roadmap](#Roadmap) for future features and [Ideas](#Ideas) for things
 * Keyword challenge search
     * In titles
     * In descriptions
+* Other VCS
+    * GH Cloud
+    * BitBucket + cloud
+    * GitLab + cloud
+    * Others?
