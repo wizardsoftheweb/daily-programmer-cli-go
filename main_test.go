@@ -4,7 +4,10 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/spf13/cobra"
 	. "gopkg.in/check.v1"
+
+	"github.com/wizardsoftheweb/daily-programmer-cli/cmd"
 )
 
 func TestRootMain(t *testing.T) { TestingT(t) }
@@ -16,6 +19,16 @@ type MainSuite struct {
 var _ = Suite(&MainSuite{})
 
 func (s *MainSuite) TestMain(c *C) {
+	var oldDailyProgCmd = &cobra.Command{}
+	*oldDailyProgCmd = *cmd.DailyProgCmd
+	dummy := func(cmd *cobra.Command, args []string) {}
+	cmd.DailyProgCmd.SilenceErrors = true
+	cmd.DailyProgCmd.DisableFlagParsing = true
+	cmd.DailyProgCmd.PersistentPreRun = dummy
+	cmd.DailyProgCmd.PreRun = dummy
+	cmd.DailyProgCmd.Run = dummy
+	cmd.DailyProgCmd.PostRun = dummy
+	cmd.DailyProgCmd.PersistentPostRun = dummy
 	c.Assert(
 		func() {
 			main()
@@ -23,6 +36,7 @@ func (s *MainSuite) TestMain(c *C) {
 		Not(PanicMatches),
 		"*",
 	)
+	*cmd.DailyProgCmd = *oldDailyProgCmd
 }
 
 func (s *MainSuite) TestWhereErrorsGoToDie(c *C) {
@@ -35,4 +49,3 @@ func (s *MainSuite) TestWhereErrorsGoToDie(c *C) {
 		s.errorMessage,
 	)
 }
-

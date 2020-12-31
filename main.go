@@ -1,7 +1,12 @@
 package main
 
+import (
+	"github.com/wizardsoftheweb/daily-programmer-cli/cmd"
+)
+
 func main() {
-	whereErrorsGoToDie(nil)
+	err := cmd.Execute()
+	whereErrorsGoToDie(err)
 }
 
 func whereErrorsGoToDie(err error) {
