@@ -23,19 +23,21 @@ var RepositoriesServiceType RepositoriesService
 
 type GithubSuite struct {
 	BaseSuite
-	GetRepoSvc GetRepoSvcMock
+	RepoSvc RepoSvcMock
 }
 
 func mockNewClient(httpClient *http.Client) *github.Client {
 	return &github.Client{}
 }
 
-type GetRepoSvcMock struct{}
+type RepoSvcMock struct{}
 
 const repoExistsName string = "repo-exists"
 const repoDneName string = "repo-dne"
 
-func (rs GetRepoSvcMock) Get(ctx context.Context, owner, repo string) (*github.Repository, *github.Response, error) {
+var callCount int
+
+func (rs RepoSvcMock) Get(ctx context.Context, owner, repo string) (*github.Repository, *github.Response, error) {
 	if repoExistsName == repo {
 		return nil, nil, nil
 	}
@@ -45,7 +47,8 @@ func (rs GetRepoSvcMock) Get(ctx context.Context, owner, repo string) (*github.R
 	return nil, nil, panicError
 }
 
-func (rs GetRepoSvcMock) Create(ctx context.Context, org string, repo *github.Repository) (*github.Repository, *github.Response, error) {
+func (rs RepoSvcMock) Create(ctx context.Context, org string, repo *github.Repository) (*github.Repository, *github.Response, error) {
+	callCount += 1
 	return nil, nil, nil
 }
 
@@ -54,7 +57,8 @@ var _ = Suite(&GithubSuite{})
 func (s *GithubSuite) SetUpTest(c *C) {
 	oldNewClient = zGithubNewClient
 	zGithubNewClient = mockNewClient
-	s.GetRepoSvc = GetRepoSvcMock{}
+	s.RepoSvc = RepoSvcMock{}
+	callCount = 0
 }
 
 func (s *GithubSuite) TearDownTest(c *C) {
@@ -67,10 +71,10 @@ func (s *GithubSuite) TestGetRepositoriesService(c *C) {
 }
 
 func (s *GithubSuite) TestDoesRepoExist(c *C) {
-	c.Assert(doesRepoExist(s.GetRepoSvc, repoExistsName), Equals, true)
-	c.Assert(doesRepoExist(s.GetRepoSvc, repoDneName), Equals, false)
+	c.Assert(doesRepoExist(s.RepoSvc, repoExistsName), Equals, true)
+	c.Assert(doesRepoExist(s.RepoSvc, repoDneName), Equals, false)
 	c.Assert(
-		func() { doesRepoExist(s.GetRepoSvc, "qqq") },
+		func() { doesRepoExist(s.RepoSvc, "qqq") },
 		Panics,
 		panicError,
 	)
@@ -78,5 +82,8 @@ func (s *GithubSuite) TestDoesRepoExist(c *C) {
 }
 
 func (s *GithubSuite) TestEnsureRepoExists(c *C) {
-
+	ensureRepoExists(s.RepoSvc, repoExistsName)
+	c.Assert(callCount, Equals, 0)
+	ensureRepoExists(s.RepoSvc, repoDneName)
+	c.Assert(callCount, Equals, 1)
 }
